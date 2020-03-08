@@ -13,16 +13,17 @@ html, body {
 }
 
 .container-fluid {
+    width: 100%;
 }
 
 #input_side {
     text-align: center;
-    background-color: rgba(200, 200, 255, 0.25);
+    background-color: rgba(200, 200, 255, 0.10);
 }
 
 #output_side {
     text-align: center;
-    background-color: rgba(255, 100, 100, 0.25);
+    background-color: rgba(255, 100, 100, 0.10);
 }
 
 .a_header {

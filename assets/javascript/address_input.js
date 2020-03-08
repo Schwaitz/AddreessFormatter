@@ -16,13 +16,13 @@ class AddressInput extends React.Component {
 
         return (
             <div className="row">
-                <div id="input_side" className="col-md-3">
+                <div id="input_side" className="col">
                     <h2 className="a_header">Input</h2>
                     <input ref={this.inputFieldRef} id="addr_input" type="text" onChange={this.updateInputValue.bind(this)}/>
                     <button onClick={this.clearAddress.bind(this)}>Clear</button>
                     <h3 id="addr_output">{this.state.a_text}</h3>
                 </div>
-                <div id="output_side" className="col-md-3">
+                <div id="output_side" className="col">
                     <h2 className="a_header">Output</h2>
                     <h4 id="street">{this.state.street}</h4>
                     <h4 id="city">{this.state.city}</h4>
@@ -48,21 +48,36 @@ class AddressInput extends React.Component {
         var postal_temp = "";
 
         if (addr_text) {
-            var a_regex = /^\s*([^,]+(?:\s+\S+)*)[ ,]*\s+(?:(\S+)\s*,\s*([A-Z]{2})[, ]*|(\S+)\s*([A-Z]{2})[, ]*)\s*([0-9]+)/i;
+            // var a_regex = /^\s*([^,.]+(?:\s+\S+)*)[,.]*\s+(?:([^,.]+)\s*[,. ]\s*([A-Z]{2})[,. ]*|([^,.]+)\s*([A-Z]{2})[,. ]*)\s*([0-9]+)/i;
+            var a_regex = /^\s*(.*(?:\s+\S+)*(?:Road|Rd|Street|St|Drive|Dr|Avenue|Ave|Av|Lane|Ln|Parkway|Pkwy|Plaza|Plz|Route|Rte|Boulevard|Blvd|Terrace|Ter|Circle|Cir))[,.]*\s+(?:([^,.]+)\s*[,. ]\s*([A-Z]{2})[,. ]*\s*([0-9]+)|([^,.]+)\s*[,. ]\s*([A-Z]*)[,. ]+\s*([0-9]+))/i;
             var addr_array = a_regex.exec(addr_text);
 
             if (addr_array != null) {
                 street_temp = addr_array[1];
-                postal_temp = addr_array[6];
 
                 if (addr_array[2] != null) {
                     city_temp = addr_array[2];
-                    state_abv_temp = addr_array[3]
+                    state_abv_temp = addr_array[3];
+                    postal_temp = addr_array[4];
                 } else {
-                    city_temp = addr_array[4];
-                    state_abv_temp = addr_array[5]
+                    city_temp = addr_array[5];
+                    state_abv_temp = addr_array[6];
+                    postal_temp = addr_array[7];
                 }
             }
+
+            street_temp = street_temp.replace(/Road/i, "Rd");
+            street_temp = street_temp.replace(/Street/i, "St");
+            street_temp = street_temp.replace(/Drive/i, "Dr");
+            street_temp = street_temp.replace(/Avenue/i, "Ave");
+            street_temp = street_temp.replace(/Lane/i, "Ln");
+            street_temp = street_temp.replace(/Parkway/i, "Pkwy");
+            street_temp = street_temp.replace(/Plaza/i, "Plz");
+            street_temp = street_temp.replace(/Route/i, "RTE");
+            street_temp = street_temp.replace(/Boulevard/i, "Blvd");
+            street_temp = street_temp.replace(/Terrace/i, "TER");
+            street_temp = street_temp.replace(/Circle/i, "Cir");
+
         }
 
         this.setState({
