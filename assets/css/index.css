@@ -33,3 +33,9 @@ html, body {
 #addr_input {
     width: 75%;
 }
+
+#output_ta{
+    width: 30%;
+    height: 125px;
+    margin-top: 50px;
+}
